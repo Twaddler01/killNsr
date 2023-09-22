@@ -1,7 +1,5 @@
-<MyLayout>:
-
-    name: name
-    #email: email
+# main layout
+MyLayout:
 
 	AnchorLayout:
 		anchor_x: "center"
@@ -19,15 +17,34 @@
 				paddimg: 20
 				#halign: 'center'
 				valign: 'center'
-				text:"\nKillN - Edit out newlines & remove/replace text sections..."
+				text:"\nKillNsr - Edit out newlines & remove/replace text sections..."
 
-			Label:
+			BoxLayout:
+				orientation: "horizontal"
 				size_hint: None, None
 				size: 300, 30
-				text_size: self.size
-				halign: 'left'
-				valign: 'center'
-				text: "Select Folder: "
+				
+				Label:
+					size_hint: None, 1
+					multiline: False
+					size: 250, 30
+					text_size: self.size
+					halign: 'left'
+					valign: 'center'
+					text: 'Choose Folder -->'
+					id: file_path_lbl
+
+				# folder path button
+				Button:
+					size_hint: None, None
+					size: 50, 30
+					halign: 'center'
+					valign: 'center'
+					text_size: self.size
+					text:"..."
+					on_release: root.show_load()
+					#padding: 10
+					#on_press: 
 
 			Label:
 				size_hint: None, None
@@ -40,7 +57,7 @@
 			TextInput:
 				size_hint: None, None
 				size: 300, 30
-				id: name
+				id: name_input
 				multiline:False
 
 			Label:
@@ -49,12 +66,12 @@
 				text_size: self.size
 				halign: 'left'
 				valign: 'center'
-				text: "Email: "
+				text: "Entry2: "
 
 			TextInput:
 				size_hint: None, None
 				size: 300, 30
-				id: email
+				id: entry2
 				multiline:False
         
 			BoxLayout:
@@ -76,8 +93,7 @@
 					text:"Reset"
 					padding: 10
 					on_press: root.resetbtn()
-			
-	# WIP
+
 	AnchorLayout:
 		anchor_x: "center"
 		anchor_y: "bottom"
@@ -106,20 +122,37 @@
 			ScrollView:
 				do_scroll_x: False
 				size_hint: 1, None
-				id: scroll_view
 				bar_width: 30
+				id: scroll_view
 				
 				size: 370, 170
 				padding: 30
 					
 				TextInput:
-					multiline: True
-				#AddOutput:
-					
-					name: name
-					#text: "Please work Aiden\n000\n111\n222\n333\n\n\n\000n\n\n\n000\nTHE END"
-				    text: self.name.text
-			        id: AddOutput
+			        id: statuswintxt
+				    text: ''
 			        
+			        multiline: True
 			        size_hint: 1, None
                     height: max(self.minimum_height, scroll_view.height)
+
+<LoadDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserListView:
+			filters: [root.is_dir]
+            id: filechooser
+            dirselect: True
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+
+            Button:
+                text: "Load"
+                on_release: root.load(filechooser.path, filechooser.selection)
