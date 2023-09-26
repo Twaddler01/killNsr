@@ -15,7 +15,6 @@ MyLayout:
 				size: 300, 30
 				text_size: self.size
 				paddimg: 20
-				#halign: 'center'
 				valign: 'center'
 				text:"\nKillNsr - Edit out newlines & remove/replace text sections..."
 
@@ -43,116 +42,145 @@ MyLayout:
 					text_size: self.size
 					text:"..."
 					on_release: root.show_load()
-					#padding: 10
-					#on_press: 
 
-			Label:
-				size_hint: None, None
-				size: 300, 30
-				text_size: self.size
-				halign: 'left'
-				valign: 'center'
-				text: "Name: "
-				
-			TextInput:
-				size_hint: None, None
-				size: 300, 30
-				id: name_input
-				multiline:False
-
-			Label:
-				size_hint: None, None
-				size: 300, 30
-				text_size: self.size
-				halign: 'left'
-				valign: 'center'
-				text: "Entry2: "
-
-			TextInput:
-				size_hint: None, None
-				size: 300, 30
-				id: entry2
-				multiline:False
-        
 			BoxLayout:
-			
 				orientation: "horizontal"
 				size_hint: None, None
 				size: self.minimum_size
-				
+
 				Button:
 					size_hint: None, None
 					size: 150, 30 
-					text:"Submit"
+					text:"SETUP"
 					padding: 10
 					on_press: root.btn()
 
 				Button:
 					size_hint: None, None
 					size: 150, 30
-					text:"Reset"
+					text:"START OVER"
 					padding: 10
 					on_press: root.resetbtn()
+
+			# hide layout until files are ready
+			BoxLayout:
+				orientation: "horizontal"
+				size_hint: None, None
+				size: self.minimum_size
+				id: custom_sr1
+				opacity: 0
+				disabled: True
+
+				Label:
+					size_hint: None, None
+					size: 150, 30
+					text_size: self.size
+					halign: 'left'
+					valign: 'center'
+					text: "Search String: "
+					id: search_input
+				
+				Label:
+					size_hint: None, None
+					size: 100, 30
+					text_size: self.size
+					halign: 'left'
+					valign: 'center'
+					text: "Use RegEx: "
+
+				CheckBox:
+					size_hint: None, None
+					size: 50, 30
+					id: isregex
+					on_active: root.on_checkbox_active(self, self.active)
+			
+			# hide layout until files are ready
+			BoxLayout:
+				orientation: "vertical"
+				size_hint: None, None
+				size: self.minimum_size
+				id: custom_sr2
+				opacity: 0
+				disabled: True
+
+				TextInput:
+					size_hint: None, None
+					size: 300, 30
+					id: search_input
+					multiline:False
+
+				Label:
+					size_hint: None, None
+					size: 300, 30
+					text_size: self.size
+					halign: 'left'
+					valign: 'center'
+					text: "Replace String: "
+
+				TextInput:
+					size_hint: None, None
+					size: 300, 30
+					id: replace_input
+					multiline:False
+
+				Button:
+					size_hint: None, None
+					size: 300, 30 
+					text:"PROCESS SEARCH/REPLACE"
+					padding: 10
+					on_press: root.process_sr()
 
 	AnchorLayout:
 		anchor_x: "center"
 		anchor_y: "bottom"
 		padding: 20
-		#size_hint: None, None
-		#size: 300, 90
-		
+
 		BoxLayout:
 			orientation: "vertical"
 			size_hint: None, None
 			size: self.minimum_size
-	
+
 			Label:
 				size_hint: None, None
 				size: 300, 30
 				text_size: self.size
 				text: "OUTPUT DISPLAY:"
 				padding: 10
-		
-			#Button:
-				#text: "bottom anchor"
-				#size_hint: None, None
-				#size: 400, 200
-				#padding: 10
-			
+
+			# output log
 			ScrollView:
 				do_scroll_x: False
+				scroll_y: 0
 				size_hint: 1, None
 				bar_width: 30
 				id: scroll_view
-				
 				size: 370, 170
 				padding: 30
-					
+
 				TextInput:
-			        id: statuswintxt
-				    text: ''
-			        
-			        multiline: True
-			        size_hint: 1, None
-                    height: max(self.minimum_height, scroll_view.height)
+					id: statuswintxt
+					text: ''
+					multiline: True
+					size_hint: 1, None
+					height: max(self.minimum_height, scroll_view.height)
 
 <LoadDialog>:
-    BoxLayout:
-        size: root.size
-        pos: root.pos
-        orientation: "vertical"
-        FileChooserListView:
+	BoxLayout:
+		size: root.size
+		pos: root.pos
+		orientation: "vertical"
+		FileChooserListView:
 			filters: [root.is_dir]
-            id: filechooser
-            dirselect: True
+			id: filechooser
+			dirselect: True
 
-        BoxLayout:
-            size_hint_y: None
-            height: 30
-            Button:
-                text: "Cancel"
-                on_release: root.cancel()
+		BoxLayout:
+			size_hint_y: None
+			height: 30
+			Button:
+				text: "Cancel"
+				on_release: root.cancel()
 
-            Button:
-                text: "Load"
-                on_release: root.load(filechooser.path, filechooser.selection)
+			Button:
+				text: "Load"
+				on_release: root.load(filechooser.path, filechooser.selection)
