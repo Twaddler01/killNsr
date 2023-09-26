@@ -7,6 +7,13 @@
 
 ![#f03c15](https://www.iconsdb.com/icons/download/color/f03c15/circle-16.png) `Changelog`
 
+09-26-2023:
+- Added custom search/replace options.
+- Hid elements of custom search/replace options until line removal is complete. Might make this optional in future updates.
+- Plan to add a second layout after initial "setup" screen, as it just seems more practical instead of hiding/showing other options.
+- Next project will be a function designed to allow "templates" of user search/replace strings and give room for multiple search/replace options to be executed simultaneously. Right now the custom search/replace function with attributes is not yet used.
+- Need to clean .py, as many functions are redundant and other code is even unused or unnecessary.
+
 09-21-2023:
 - Using Kivy "Factory" for multiple layouts, so updated .kv filename to better suit setup.
 - Now have a working log output display. Will eventually add an "export to file" option for logs.
